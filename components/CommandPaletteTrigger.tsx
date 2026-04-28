@@ -19,7 +19,8 @@ export function CommandPaletteTrigger() {
     <button
       onClick={open}
       type="button"
-      className="inline-flex items-center gap-sm px-sm py-1.5 border border-outline-variant rounded bg-surface-container/50 hover:bg-surface-container text-on-surface-variant transition-colors"
+      aria-label="ค้นหายา"
+      className="inline-flex items-center gap-sm px-sm py-1.5 border border-outline-variant rounded bg-surface-container/50 hover:bg-surface-container active:bg-surface-container/80 text-on-surface-variant transition-colors min-h-[40px]"
     >
       <Search className="h-4 w-4" />
       <span className="hidden sm:inline text-[13px]">ค้นหายา...</span>

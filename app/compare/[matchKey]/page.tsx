@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowLeft, Check, Info, MinusCircle, Star, TrendingDown } from "lucide-react";
 import { getCompare, safeDecodeMatchKey, type Vendor } from "@/lib/api";
 import {
@@ -8,8 +9,20 @@ import {
   STOCK_STATUS_TONE,
   VENDOR_LABEL
 } from "@/lib/format";
+import { buildMetadata } from "@/lib/seo";
 
 export const revalidate = 10;
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { matchKey: rawParam } = await params;
+  const matchKey = safeDecodeMatchKey(rawParam);
+  const drugName = matchKey.split("|")[0] ?? "ยา";
+  return buildMetadata({
+    title: `เทียบราคา ${drugName} 3 ร้าน`,
+    description: `เปรียบเทียบราคา ${drugName} ใน MSK · Somsak · SOR — เลือกร้านที่ถูกที่สุดได้ทันที`,
+    path: `/compare/${encodeURIComponent(matchKey.replace(/\|/g, "~"))}`
+  });
+}
 
 const VENDOR_LIST: { key: Vendor; name: string }[] = [
   { key: "msk", name: "MSK / หมอยาสิริกร" },
@@ -35,7 +48,7 @@ export default async function ComparePage({ params }: PageProps) {
 
   if (error || !compare) {
     return (
-      <main className="flex-grow w-full max-w-container-max mx-auto px-gutter pt-md pb-xl">
+      <main className="flex-grow w-full max-w-container-max mx-auto px-sm sm:px-gutter pt-md pb-xl">
         <div className="border border-error rounded bg-error-container/40 p-md text-on-error-container">
           ไม่สามารถโหลดข้อมูลเปรียบเทียบ: {error ?? "ไม่ทราบสาเหตุ"}
         </div>
@@ -46,7 +59,7 @@ export default async function ComparePage({ params }: PageProps) {
   const cheapestKey = compare.cheapest?.vendorKey;
 
   return (
-    <main className="flex-grow w-full max-w-container-max mx-auto px-gutter pt-md pb-xl flex flex-col gap-md">
+    <main className="flex-grow w-full max-w-container-max mx-auto px-sm sm:px-gutter pt-md pb-xl flex flex-col gap-md">
       <Link
         href="/search"
         className="inline-flex items-center gap-xs text-on-surface-variant text-body-sm hover:text-primary transition-colors w-fit"

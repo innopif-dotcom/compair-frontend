@@ -81,9 +81,9 @@ export function SearchBar({ initialValue = "", size = "lg" }: Props) {
   const fontClass = size === "lg" ? "text-body-lg" : "text-body-md";
 
   return (
-    <div ref={containerRef} className="relative w-full">
-      <div className="w-full flex items-center bg-surface-container-lowest border border-outline-variant rounded focus-within:border-primary transition-colors">
-        <div className="ml-sm mr-xs flex items-center justify-center w-5 h-5">
+    <div ref={containerRef} className="relative w-full min-w-0">
+      <div className="w-full flex items-center bg-surface-container-lowest border border-outline-variant rounded focus-within:border-primary transition-colors overflow-hidden">
+        <div className="ml-sm mr-xs flex items-center justify-center w-5 h-5 shrink-0">
           {loading ? (
             <Loader2 className="h-5 w-5 animate-spin text-primary" />
           ) : (
@@ -98,15 +98,17 @@ export function SearchBar({ initialValue = "", size = "lg" }: Props) {
             if (event.key === "Enter") submit();
             if (event.key === "Escape") setOpen(false);
           }}
-          className={`flex-grow bg-transparent border-none focus:outline-none focus:ring-0 ${fontClass} text-on-surface ${padY} px-xs placeholder:text-outline-variant`}
-          placeholder="ค้นหายาด้วยชื่อสามัญ ชื่อการค้า บาร์โค้ด หรือร้าน..."
+          className={`flex-grow min-w-0 bg-transparent border-none focus:outline-none focus:ring-0 ${fontClass} text-on-surface ${padY} px-xs placeholder:text-outline-variant`}
+          placeholder="ค้นหายาด้วยชื่อสามัญ ชื่อการค้า..."
           type="text"
         />
         <button
           onClick={submit}
-          className={`bg-primary text-on-primary font-label-caps text-label-caps h-full px-lg ${padY} rounded-r hover:bg-primary-container transition-colors border border-primary`}
+          aria-label="ค้นหา"
+          className={`shrink-0 bg-primary text-on-primary font-label-caps text-label-caps h-full px-sm sm:px-lg ${padY} rounded-r hover:bg-primary-container active:bg-primary-container transition-colors border border-primary inline-flex items-center justify-center gap-xs`}
         >
-          SEARCH
+          <Search className="h-4 w-4 sm:hidden" />
+          <span className="hidden sm:inline">SEARCH</span>
         </button>
       </div>
 

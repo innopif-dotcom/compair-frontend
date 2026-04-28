@@ -1,10 +1,19 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowRight, Database, SlidersHorizontal } from "lucide-react";
 import { search } from "@/lib/api";
 import { SearchBar } from "@/components/SearchBar";
 import { ResultsTable } from "@/components/ResultsTable";
+import { buildMetadata } from "@/lib/seo";
 
 export const revalidate = 30;
+
+export const metadata: Metadata = buildMetadata({
+  title: "ค้นหาและเทียบราคายา 3 ร้าน",
+  description:
+    "เทียบราคายาจากร้าน MSK / Somsak / SOR ในที่เดียว — ค้นด้วยชื่อสามัญ ชื่อการค้า บาร์โค้ด พร้อมประวัติราคาย้อนหลัง",
+  path: "/"
+});
 
 export default async function HomePage() {
   let recent;
@@ -16,16 +25,16 @@ export default async function HomePage() {
   }
 
   return (
-    <main className="flex-grow w-full max-w-container-max mx-auto px-gutter pt-[80px] pb-xl flex flex-col gap-xl">
+    <main className="flex-grow w-full max-w-container-max mx-auto px-sm sm:px-gutter pt-md sm:pt-[80px] pb-xl flex flex-col gap-md sm:gap-xl overflow-hidden">
       <section className="flex flex-col items-center w-full max-w-3xl mx-auto text-center">
         <p className="inline-flex items-center gap-xs font-label-caps text-label-caps text-outline uppercase tracking-widest mb-sm">
           <Database className="h-3.5 w-3.5" />
           Pharmacy Index
         </p>
-        <h1 className="font-display text-display text-on-surface mb-sm">
+        <h1 className="font-display text-[28px] sm:text-display leading-tight text-on-surface mb-sm">
           ค้นหายาและเทียบราคา จากร้านยาทั้งสามแห่ง
         </h1>
-        <p className="font-body-lg text-body-lg text-on-surface-variant mb-lg max-w-2xl">
+        <p className="font-body-lg text-body-md sm:text-body-lg text-on-surface-variant mb-md sm:mb-lg max-w-2xl">
           ฐานข้อมูลรวมจาก MSK · Somsak · SOR — ค้นด้วยชื่อสามัญ ชื่อการค้า บาร์โค้ด หรือรหัสสินค้า
           พร้อมประวัติราคาย้อนหลัง
         </p>

@@ -1,15 +1,30 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { Inbox, Pill, Sparkles, Store } from "lucide-react";
 import { searchCompare, type DrugGroup, type Vendor } from "@/lib/api";
 import { SearchBar } from "@/components/SearchBar";
 import { DrugCompareCard } from "@/components/DrugCompareCard";
 import { Skeleton } from "@/components/Skeleton";
 import { AdvancedFilters } from "@/components/AdvancedFilters";
+import { buildMetadata } from "@/lib/seo";
 
 export const revalidate = 10;
 
 interface PageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
+}
+
+export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+  const params = await searchParams;
+  const q = pickString(params.q);
+  const path = q ? `/search?q=${encodeURIComponent(q)}` : "/search";
+  return buildMetadata({
+    title: q ? `ค้นหา "${q}" — เทียบราคา 3 ร้าน` : "ค้นหายา + เทียบราคา 3 ร้าน",
+    description: q
+      ? `ผลการค้นหายา "${q}" จาก MSK · Somsak · SOR — เทียบราคาตรงในหน้าเดียว`
+      : "ค้นหายาด้วยชื่อสามัญ ชื่อการค้า หรือบาร์โค้ด — ระบบดึงราคาจาก 3 ร้านมาเทียบให้อัตโนมัติ",
+    path
+  });
 }
 
 interface Filters {
@@ -111,13 +126,13 @@ export default async function SearchPage({ searchParams }: PageProps) {
   ].join("|");
 
   return (
-    <main className="flex-grow w-full max-w-container-max mx-auto px-gutter pt-md pb-xl flex flex-col gap-md">
-      <section className="flex flex-col gap-sm border border-outline-variant rounded-lg p-md bg-surface-container-lowest">
+    <main className="flex-grow w-full max-w-container-max mx-auto px-sm sm:px-gutter pt-md pb-xl flex flex-col gap-md overflow-hidden">
+      <section className="flex flex-col gap-sm border border-outline-variant rounded-lg p-sm sm:p-md bg-surface-container-lowest">
         <p className="inline-flex items-center gap-xs font-label-caps text-label-caps text-outline uppercase tracking-widest">
           <Pill className="h-3.5 w-3.5" />
           Drug Index · Cross-vendor compare
         </p>
-        <h1 className="font-h1 text-h1">ค้นหายา + เทียบราคา 3 ร้าน</h1>
+        <h1 className="font-h1 text-[24px] sm:text-h1 leading-tight">ค้นหายา + เทียบราคา 3 ร้าน</h1>
         <SearchBar initialValue={q} size="md" />
         <AdvancedFilters />
         <p className="text-body-sm text-on-surface-variant">

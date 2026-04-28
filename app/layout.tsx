@@ -1,15 +1,55 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { CommandPaletteProvider } from "@/components/CommandPalette";
+import { SITE_NAME, SITE_URL, buildMetadata, jsonLdScript } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "DrugCompare — ค้นหาและเทียบราคายา",
-  description:
-    "ค้นหาราคายาและสินค้าเภสัชจากร้าน MSK / Somsak / SOR ผ่านดัชนี Elasticsearch ที่อัปเดตจากฐานข้อมูล MongoDB"
+  ...buildMetadata({}),
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} — ค้นหาและเทียบราคายา 3 ร้าน`,
+    template: `%s | ${SITE_NAME}`
+  },
+  applicationName: SITE_NAME,
+  keywords: [
+    "เทียบราคายา",
+    "ค้นหายา",
+    "ราคายา",
+    "MSK",
+    "Somsak",
+    "SOR",
+    "หมอยาสิริกร",
+    "drug compare",
+    "pharmacy price",
+    "Thai pharmacy"
+  ],
+  authors: [{ name: SITE_NAME }],
+  generator: "Next.js",
+  formatDetection: { email: false, address: false, telephone: false }
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#0f1e2c"
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    url: SITE_URL,
+    inLanguage: "th-TH",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${SITE_URL}/search?q={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }
+  };
+
   return (
     <html lang="th">
       <head>
@@ -18,6 +58,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap"
           rel="stylesheet"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={jsonLdScript(websiteJsonLd)}
         />
       </head>
       <body className="bg-surface-container-lowest min-h-screen flex flex-col antialiased">

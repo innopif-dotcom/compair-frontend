@@ -25,18 +25,18 @@ export function DrugCompareCard({ group }: { group: DrugGroup }) {
       : 0;
 
   return (
-    <article className="border border-outline-variant rounded bg-surface-container-lowest p-md flex flex-col gap-sm hover:border-primary/50 transition-colors">
-      <header className="flex items-start justify-between gap-sm">
+    <article className="border border-outline-variant rounded bg-surface-container-lowest p-sm sm:p-md flex flex-col gap-sm hover:border-primary/50 transition-colors">
+      <header className="flex items-start justify-between gap-xs sm:gap-sm">
         <div className="flex flex-col gap-xs min-w-0">
-          <h3 className="font-h2 text-h2 text-on-surface leading-tight truncate" title={group.anchor.rawName}>
+          <h3 className="font-h2 text-[18px] sm:text-h2 text-on-surface leading-tight line-clamp-2 sm:truncate" title={group.anchor.rawName}>
             {group.anchor.rawName}
           </h3>
           {group.anchor.genericName && (
-            <span className="text-body-sm text-on-surface-variant">
+            <span className="text-[12px] sm:text-body-sm text-on-surface-variant truncate">
               Generic: {group.anchor.genericName}
             </span>
           )}
-          <div className="flex flex-wrap gap-xs text-[12px] text-on-surface-variant font-mono">
+          <div className="flex flex-wrap gap-xs text-[11px] sm:text-[12px] text-on-surface-variant font-mono">
             {group.anchor.strength && <span>{group.anchor.strength}</span>}
             {group.anchor.packSize && <span>· {group.anchor.packSize}</span>}
             {group.anchor.unit && <span>· {group.anchor.unit}</span>}
@@ -44,9 +44,12 @@ export function DrugCompareCard({ group }: { group: DrugGroup }) {
         </div>
         <Link
           href={buildCompareHref(group.matchKey)}
-          className="shrink-0 inline-flex items-center gap-xs text-[11px] font-label-caps text-primary hover:underline whitespace-nowrap uppercase tracking-widest"
+          className="shrink-0 inline-flex items-center gap-xs text-[10px] sm:text-[11px] font-label-caps text-primary hover:underline whitespace-nowrap uppercase tracking-widest min-h-[32px]"
+          aria-label={`ดูรายละเอียดเปรียบเทียบ ${group.anchor.rawName}`}
         >
-          ดูรายละเอียด <ArrowRight className="h-3 w-3" />
+          <span className="hidden sm:inline">ดูรายละเอียด</span>
+          <span className="sm:hidden">ดูเพิ่ม</span>
+          <ArrowRight className="h-3 w-3" />
         </Link>
       </header>
 
@@ -87,13 +90,13 @@ function VendorPriceCell({
 }) {
   if (!match) {
     return (
-      <div className="border border-outline-variant rounded p-sm flex flex-col gap-xs opacity-50 min-h-[120px]">
-        <span className="font-label-caps text-label-caps text-outline uppercase tracking-widest">
+      <div className="border border-outline-variant rounded p-xs sm:p-sm flex flex-col gap-xs opacity-50 min-h-[110px] sm:min-h-[120px]">
+        <span className="font-label-caps text-[10px] sm:text-label-caps text-outline uppercase tracking-widest">
           {VENDOR_LABEL[vendor]}
         </span>
-        <span className="text-body-sm text-on-surface-variant flex-1 flex items-center gap-xs">
-          <MinusCircle className="h-4 w-4" />
-          ไม่พบ
+        <span className="text-[12px] sm:text-body-sm text-on-surface-variant flex-1 flex items-center gap-xs">
+          <MinusCircle className="h-3.5 w-3.5 shrink-0" />
+          <span className="hidden sm:inline">ไม่พบ</span>
         </span>
       </div>
     );
