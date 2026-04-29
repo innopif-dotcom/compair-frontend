@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { CommandPaletteProvider } from "@/components/CommandPalette";
+import { CartProvider } from "@/lib/cart";
 import { SITE_NAME, SITE_URL, buildMetadata, jsonLdScript } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -66,13 +67,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-surface-container-lowest min-h-screen flex flex-col antialiased">
         <CommandPaletteProvider>
-          <Header />
-          <div className="pt-[64px] flex-1 flex flex-col">{children}</div>
-          <footer className="w-full py-base mt-auto border-t border-outline-variant bg-surface-container-low text-on-surface-variant text-xs uppercase tracking-widest">
-            <div className="flex justify-center px-md max-w-container-max mx-auto">
-              <p>© DrugCompare · ข้อมูลอัปเดตจากฐานข้อมูลภายใน</p>
-            </div>
-          </footer>
+          <CartProvider>
+            <Header />
+            <div className="pt-[64px] flex-1 flex flex-col">{children}</div>
+            <footer className="w-full py-base mt-auto border-t border-outline-variant bg-surface-container-low text-on-surface-variant text-xs uppercase tracking-widest">
+              <div className="flex justify-center px-md max-w-container-max mx-auto">
+                <p>© DrugCompare · ข้อมูลอัปเดตจากฐานข้อมูลภายใน</p>
+              </div>
+            </footer>
+          </CartProvider>
         </CommandPaletteProvider>
       </body>
     </html>
