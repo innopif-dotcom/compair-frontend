@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Pill } from "lucide-react";
 import { CommandPaletteTrigger } from "./CommandPaletteTrigger";
+import { CartIndicator } from "./CartIndicator";
 
 export function Header() {
   return (
@@ -23,7 +24,10 @@ export function Header() {
             </Link>
           </nav>
         </div>
-        <CommandPaletteTrigger />
+        <div className="flex items-center gap-xs">
+          <CartIndicator />
+          <CommandPaletteTrigger />
+        </div>
       </div>
     </header>
   );
