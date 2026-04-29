@@ -7,6 +7,7 @@ import {
   STOCK_STATUS_TONE,
   VENDOR_LABEL
 } from "@/lib/format";
+import { AddToCartButton } from "./AddToCartButton";
 
 const VENDOR_LIST: Vendor[] = ["msk", "somsak", "sor"];
 
@@ -42,15 +43,23 @@ export function DrugCompareCard({ group }: { group: DrugGroup }) {
             {group.anchor.unit && <span>· {group.anchor.unit}</span>}
           </div>
         </div>
-        <Link
-          href={buildCompareHref(group.matchKey)}
-          className="shrink-0 inline-flex items-center gap-xs text-[10px] sm:text-[11px] font-label-caps text-primary hover:underline whitespace-nowrap uppercase tracking-widest min-h-[32px]"
-          aria-label={`ดูรายละเอียดเปรียบเทียบ ${group.anchor.rawName}`}
-        >
-          <span className="hidden sm:inline">ดูรายละเอียด</span>
-          <span className="sm:hidden">ดูเพิ่ม</span>
-          <ArrowRight className="h-3 w-3" />
-        </Link>
+        <div className="shrink-0 flex items-center gap-xs">
+          <AddToCartButton
+            matchKey={group.matchKey}
+            rawName={group.anchor.rawName}
+            size="sm"
+            variant="text"
+          />
+          <Link
+            href={buildCompareHref(group.matchKey)}
+            className="inline-flex items-center gap-xs text-[10px] sm:text-[11px] font-label-caps text-primary hover:underline whitespace-nowrap uppercase tracking-widest min-h-[32px]"
+            aria-label={`ดูรายละเอียดเปรียบเทียบ ${group.anchor.rawName}`}
+          >
+            <span className="hidden sm:inline">ดูรายละเอียด</span>
+            <span className="sm:hidden">ดูเพิ่ม</span>
+            <ArrowRight className="h-3 w-3" />
+          </Link>
+        </div>
       </header>
 
       <div className="grid grid-cols-3 gap-xs">

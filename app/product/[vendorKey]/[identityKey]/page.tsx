@@ -9,6 +9,7 @@ import {
   CrossVendorCompareSkeleton
 } from "@/components/CrossVendorCompareSection";
 import { Skeleton } from "@/components/Skeleton";
+import { AddToCartButton } from "@/components/AddToCartButton";
 import {
   formatDate,
   formatMoney,
@@ -138,6 +139,16 @@ export default async function ProductDetailPage({ params }: PageProps) {
           <Stat label="รหัสร้าน" value={product.code ?? "—"} mono />
           <Stat label="เห็นล่าสุด" value={formatDate(product.lastSeenAt)} />
         </div>
+        {product.matchKey && (
+          <div className="mt-xs">
+            <AddToCartButton
+              matchKey={product.matchKey}
+              rawName={product.rawName}
+              size="md"
+              variant="text"
+            />
+          </div>
+        )}
         {product.sourceUrl && (
           <a
             className="inline-flex items-center gap-xs text-primary text-body-sm hover:underline mt-xs"

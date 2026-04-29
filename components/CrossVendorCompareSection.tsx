@@ -8,6 +8,7 @@ import {
   STOCK_STATUS_TONE,
   VENDOR_LABEL
 } from "@/lib/format";
+import { AddToCartButton } from "./AddToCartButton";
 
 const VENDOR_LIST: { key: Vendor; name: string }[] = [
   { key: "msk", name: "MSK" },
@@ -180,16 +181,24 @@ export async function CrossVendorCompareSection({
 
               <div className="text-[11px] text-on-surface-variant flex items-center justify-between gap-xs">
                 <span className="truncate">เห็นล่าสุด: {formatDate(product.lastSeenAt)}</span>
-                {!isCurrent && (
-                  <Link
-                    href={`/product/${product.vendorKey}/${encodeURIComponent(
-                      product.identityKey
-                    )}`}
-                    className="text-primary hover:underline whitespace-nowrap"
-                  >
-                    ดู →
-                  </Link>
-                )}
+                <div className="flex items-center gap-xs shrink-0">
+                  <AddToCartButton
+                    matchKey={compare.matchKey}
+                    rawName={product.rawName}
+                    size="sm"
+                    variant="text"
+                  />
+                  {!isCurrent && (
+                    <Link
+                      href={`/product/${product.vendorKey}/${encodeURIComponent(
+                        product.identityKey
+                      )}`}
+                      className="text-primary hover:underline whitespace-nowrap"
+                    >
+                      ดู →
+                    </Link>
+                  )}
+                </div>
               </div>
             </article>
           );
