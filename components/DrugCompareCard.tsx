@@ -48,7 +48,7 @@ export function DrugCompareCard({ group }: { group: DrugGroup }) {
             matchKey={group.matchKey}
             rawName={group.anchor.rawName}
             size="sm"
-            variant="text"
+            variant="icon"
           />
           <Link
             href={buildCompareHref(group.matchKey)}

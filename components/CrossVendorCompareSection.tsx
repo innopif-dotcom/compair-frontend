@@ -186,7 +186,7 @@ export async function CrossVendorCompareSection({
                     matchKey={compare.matchKey}
                     rawName={product.rawName}
                     size="sm"
-                    variant="text"
+                    variant="icon"
                   />
                   {!isCurrent && (
                     <Link
