@@ -16,18 +16,20 @@ function fmtMoney(value: number): string {
  * Columns: vendor, rawName, qty, unit, unitPrice, total
  */
 export function summaryToCsv(summary: OptimizeSummary): string {
+  const escaped = (s: string | number | null) => {
+    const v = s == null ? "" : String(s);
+    if (/[",\n]/.test(v)) return `"${v.replace(/"/g, '""')}"`;
+    return v;
+  };
+
   const header = "vendor,product,qty,unit,unitPrice,total";
   const rows: string[] = [header];
+
   for (const vendor of ["msk", "somsak", "sor"] as Vendor[]) {
     for (const row of summary.perVendorBreakdown[vendor]) {
       const product = row.vendors[vendor].product;
       const unit = product?.unit ?? "";
       const unitPrice = row.pickedPrice ?? "";
-      const escaped = (s: string | number | null) => {
-        const v = s == null ? "" : String(s);
-        if (/[",\n]/.test(v)) return `"${v.replace(/"/g, '""')}"`;
-        return v;
-      };
       rows.push(
         [
           VENDOR_LABELS[vendor],
@@ -40,13 +42,15 @@ export function summaryToCsv(summary: OptimizeSummary): string {
       );
     }
   }
+
   if (summary.unmatchedCount > 0) {
     rows.push("");
     rows.push("# unmatched (no vendor available)");
     for (const row of summary.rows.filter((r) => r.pickedVendor === null)) {
-      rows.push(`,${row.rawName.replace(/,/g, " ")},${row.qty},,,`);
+      rows.push(`,${escaped(row.rawName)},${row.qty},,,`);
     }
   }
+
   rows.push("");
   rows.push(`# total,,,,,${summary.totals.bySplit}`);
   return rows.join("\n");
