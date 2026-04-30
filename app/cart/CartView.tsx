@@ -272,8 +272,16 @@ function CartItemRow({
                       : "border-outline-variant/40 bg-surface-container/40 opacity-50 cursor-not-allowed"
                 }`}
               >
-                <span className="font-label-caps text-[9px] text-outline uppercase tracking-widest">
+                <span className="font-label-caps text-[9px] text-outline uppercase tracking-widest flex items-center gap-1">
                   {VENDOR_LABEL[v]}
+                  {slot.matchType === "similar" && (
+                    <span
+                      className="font-mono text-[10px] text-on-surface-variant normal-case tracking-normal"
+                      title="ตัวยา/ขนาดใกล้เคียง — ไม่ใช่ matchKey เดียวกันเป๊ะ"
+                    >
+                      ≈
+                    </span>
+                  )}
                 </span>
                 {product ? (
                   <>

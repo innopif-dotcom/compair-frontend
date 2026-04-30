@@ -50,9 +50,9 @@ export function optimizeCart(
     const vendors: Record<Vendor, VendorSlot> = data
       ? data.vendors
       : {
-          msk: { vendorKey: "msk", product: null, available: false },
-          somsak: { vendorKey: "somsak", product: null, available: false },
-          sor: { vendorKey: "sor", product: null, available: false }
+          msk: { vendorKey: "msk", product: null, matchType: "none", available: false },
+          somsak: { vendorKey: "somsak", product: null, matchType: "none", available: false },
+          sor: { vendorKey: "sor", product: null, matchType: "none", available: false }
         };
 
     let picked: Vendor | null = null;

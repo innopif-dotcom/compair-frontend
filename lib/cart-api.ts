@@ -11,6 +11,7 @@ export interface VendorSlot {
     unit: string | null;
     stockStatus: string;
   } | null;
+  matchType: "exact" | "similar" | "none";
   available: boolean;
 }
 
